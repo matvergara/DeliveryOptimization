@@ -1,7 +1,14 @@
 notas_personales.txt
 capturas/
-datos_pedidos.xlsx
 test.ipynb
+
 .venv/
-backup_data_pedidos.xlsx
+.streamlit/
 __pycache__
+*.pyc
+
+data/raw/*.xlsx
+data/stage/*.csv
+data/marts/*.csv
+backup_data_pedidos.xlsx
+dashboard.pbix

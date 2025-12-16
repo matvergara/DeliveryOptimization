@@ -1,3 +1,7 @@
 notas_personales.txt
 capturas/
-Datos_PedidosYa.xlsx
+datos_pedidos.xlsx
+test.ipynb
+.venv/
+backup_data_pedidos.xlsx
+__pycache__

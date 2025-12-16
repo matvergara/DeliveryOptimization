@@ -1,4 +1,4 @@
-# Análisis Operativo de Reparto – Pipeline ETL y BI
+# Análisis Operativo de Reparto – Pipeline ETL y Business Intelligence
 
 Este proyecto implementa un pipeline analítico end-to-end para el análisis de operaciones de reparto, desde la recolección de datos reales hasta la visualización de métricas clave en Power BI.
 
@@ -6,11 +6,11 @@ Incluye una aplicación de ingesta desarrollada en Streamlit con soporte de OCR,
 
 El objetivo es analizar rendimiento operativo, tiempos de entrega y rentabilidad por turno, zona y proveedor.
 
----
-
 >**Privacidad de los datos**
 >Los datos utilizados corresponden a registros reales y no se incluyen en este repositorio.
 Las direcciones fueron anonimizadas y reemplazadas por códigos postales y zonas operativas.
+
+---
 
 ## 🎯 Objetivos
 
@@ -22,10 +22,34 @@ Las direcciones fueron anonimizadas y reemplazadas por códigos postales y zonas
 
 ## 🧱 Arquitectura del Pipeline
 
-RAW (Excel + OCR)
-→ Staging (limpieza y tipado)
-→ Dimensiones y hechos
-→ Power BI (métricas y dashboard)
+```mermaid
+flowchart TB
+    subgraph RAW
+        A1[Excel]
+        A2[OCR]
+    end
+
+    subgraph STAGING
+        B[ Limpieza<br/>Tipado<br/>Validaciones ]
+    end
+
+    subgraph MODELO ANALÍTICO
+        C1[Dimensiones]
+        C2[Hechos]
+    end
+
+    subgraph BI
+        D[Power BI<br/>Dashboards & KPIs]
+    end
+
+    A1 --> B
+    A2 --> B
+    B --> C1
+    B --> C2
+    C1 --> D
+    C2 --> D
+```
+
 
 ## 📁 Estructura del repositorio
 ```
@@ -57,6 +81,7 @@ El modelo sigue un esquema estrella con las siguientes tablas:
 **Hechos**
 - `fact_turnos`
 - `fact_pedidos`
+
 
 ## ➡️ Ejecución del pipeline
 1. Cargar registros mediante la app Streamlit.

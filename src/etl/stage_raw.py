@@ -21,6 +21,16 @@ ARCHIVO_EXCEL = DATA_RAW / "datos_pedidos.xlsx"
 # Funciones
 # --------------------------------------------------
 def normalizar_clima(valor):
+    """
+    Normaliza la columna clima
+
+    Args:
+        valor: valor de la celda
+
+    Returns
+        None si la celda esta vacía
+        valor capitalizado y con el metodo strip aplicado
+    """
     if pd.isna(valor):
         return None
     return str(valor).strip().capitalize()
@@ -48,7 +58,7 @@ def stage_turnos(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
     df["ID_Turno"] = df["ID_Turno"].astype(int)
-    df["Fecha"] = pd.to_datetime(df["Fecha"]).dt.date
+    df["Fecha"] = pd.to_datetime(df["Fecha"], format='%Y-%m-%d')
     df["Hora_Inicio"] = pd.to_datetime(df["Hora_Inicio"])
     df["Hora_Fin"] = pd.to_datetime(df["Hora_Fin"])
 
@@ -84,8 +94,8 @@ def stage_pedidos(df: pd.DataFrame) -> pd.DataFrame:
     df["ID_Pedido"] = df["ID_Pedido"].astype(int)
     df["ID_Turno"] = pd.to_numeric(df["ID_Turno"], errors="coerce")
 
-    df["Hora_Aceptacion"] = pd.to_datetime(df["Hora_Aceptacion"])
-    df["Hora_Entrega"] = pd.to_datetime(df["Hora_Entrega"])
+    df["Hora_Aceptacion"] = pd.to_datetime(df["Hora_Aceptacion"], format='%d/%m/%Y %H:%M')
+    df["Hora_Entrega"] = pd.to_datetime(df["Hora_Entrega"],  format='%d/%m/%Y %H:%M')
 
     df = df[df["Hora_Entrega"] >= df["Hora_Aceptacion"]]
 
@@ -132,7 +142,6 @@ def main() -> None:
 
     df_turnos_clean.to_csv(DATA_STAGE / "turnos_clean.csv", index=False)
     df_pedidos_clean.to_csv(DATA_STAGE / "pedidos_clean.csv", index=False)
-
 
 if __name__ == "__main__":
     main()
